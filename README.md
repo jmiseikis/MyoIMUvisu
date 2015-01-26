@@ -12,4 +12,4 @@ NodeJS is used as backend, with communication to Thalmic Labs Myo done using web
 
 ### Screenshot
 
-![Myo Test Page](.images/MyoTestPage.jpg)
+![Myo Test Page](images/MyoTestPage.jpg)
