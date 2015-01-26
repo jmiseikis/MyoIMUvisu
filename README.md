@@ -1,4 +1,3 @@
-# MyoIMUvisu
 Myo IMU visualization on a simple HTML page
 =============
 
