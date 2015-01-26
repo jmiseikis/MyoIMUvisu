@@ -1,0 +1,55 @@
+
+script.
+  var myApp = angular.module('myApp',[]);
+  var socket = io.connect('http://localhost:3000');
+
+  var orientation = {
+    x: 0,
+    y: 0,
+    z: 0
+  };
+  var gyroscope = {
+    x: 0,
+    y: 0,
+    z: 0
+  };
+  var accelerometer = {
+    x: 0,
+    y: 0,
+    z: 0
+  };
+  
+  socket.on('IMU Update', function(IMUmsg){
+    orientation = IMUmsg.orientation;
+    gyroscope = IMUmsg.gyroscope;
+    accelerometer = IMUmsg.accelerometer;
+
+  });
+
+  myApp.controller('OrientationController', ['$scope','$interval', function($scope,$interval) {
+    $interval(function(){
+      $scope.x = orientation.x;
+      $scope.y = orientation.y;
+      $scope.z = orientation.z;
+    },10);
+  }]);
+
+  myApp.controller('GyroscopeController', ['$scope','$interval', function($scope,$interval) {
+    $interval(function(){
+      $scope.x = gyroscope.x;
+      $scope.y = gyroscope.y;
+      $scope.z = gyroscope.z;
+    },10);
+  }]);
+
+  myApp.controller('AccelerometerController', ['$scope','$interval', function($scope,$interval) {
+    $interval(function(){
+      $scope.x = accelerometer.x;
+      $scope.y = accelerometer.y;
+      $scope.z = accelerometer.z;
+    },10);
+  }]);
+
+  function sendZero(){
+    socket.emit('Zero orientation');
+  }

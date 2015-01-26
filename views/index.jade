@@ -1,0 +1,51 @@
+extends layout
+
+block content
+
+  include ./script.jade
+
+  div(class="navbar navbar-inverse navbar-fixed-top")
+    div(class="navbar-header")
+
+  div(class="jumbotron")
+    div(class="container")
+      h1 Myo Test Page
+      p This page shows the IMU data from Myo Controller
+      p
+        button(class="btn-lg btn-primary" onclick="sendZero()") Zero Orientation
+
+
+  div(class="container")
+    div(class="row")
+      div(class="col-md-4")
+        div(ng-controller='OrientationController')
+          h2 Orientation
+
+          p
+            meter(min="-1" max="1" low="0" value="{{x}}")
+          p
+            meter(min="-1" max="1" low="0" value="{{y}}")
+          p
+            meter(min="-1" max="1" low="0" value="{{z}}")
+
+      div(class="col-md-4")
+        div(ng-controller='GyroscopeController')
+          h2 Gyroscope
+
+          p
+            meter(min="-1000" max="1000" low="0" value="{{x}}")
+          p
+            meter(min="-1000" max="1000" low="0" value="{{y}}")
+          p
+            meter(min="-1000" max="1000" low="0" value="{{z}}")
+
+      div(class="col-md-4")
+        div(ng-controller='AccelerometerController')
+          h2 Accelerometer
+
+          p
+            meter(min="-1" max="1" low="0" value="{{x}}")
+          p
+            meter(min="-1" max="1" low="0" value="{{y}}")
+          p
+            meter(min="-1" max="1" low="0" value="{{z}}")
