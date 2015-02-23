@@ -9,3 +9,7 @@ NodeJS is used as backend, with communication to Thalmic Labs Myo done using web
 **Green bar**: Positive values
 
 **Zero orientation button**: Defines current Myo orientation as ground truth by adding appropriate offsets
+
+### Screenshot
+
+![Myo Test Page](images/MyoTestPage.jpg)
