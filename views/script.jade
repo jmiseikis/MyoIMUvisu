@@ -2,6 +2,9 @@
 script.
   var myApp = angular.module('myApp',[]);
   var socket = io.connect('http://localhost:3000');
+  var emg1 = 0, emg2 = 0, emg3 = 0, emg4 = 0, emg5 = 0, emg6 = 0, emg7 = 0, emg8 = 0;
+  var emgXvals = [];
+  var emgData = [[]];
 
   var orientation = {
     x: 0,
@@ -23,7 +26,6 @@ script.
     orientation = IMUmsg.orientation;
     gyroscope = IMUmsg.gyroscope;
     accelerometer = IMUmsg.accelerometer;
-
   });
 
   myApp.controller('OrientationController', ['$scope','$interval', function($scope,$interval) {
@@ -52,4 +54,52 @@ script.
 
   function sendZero(){
     socket.emit('Zero orientation');
+  }
+
+  initEMGData();
+  // EMG Data
+  function initEMGData() {
+    alert('initEMGData!');
+
+    for (var i=0; i < 8; i++) {
+      var temp = Array.apply(null, new Array(100)).map(Number.prototype.valueOf,20);
+      emgData[i] = {
+        datasets: [
+          {
+            data: temp
+          }
+        ]
+      };
+    }
+
+    alert('initEMGData! Done!');
+  }
+
+  socket.on('EMG Update', function(EMGmsg){
+    //alert(EMGmsg);
+    //shiftEMGData();
+    //addEMGDataElement(EMGmsg);
+
+    updateGraphs();
+  });
+
+  function shiftEMGData() {
+    for (var i=0; i < 8; i++) {
+      emgData[i].shift;
+    }
+  }
+
+  function addEMGDataElement(EMGmsg) {
+    for (var i=0; i < 8; i++) {
+      emgData[i].push(EMGmsg[i]);
+    }
+  }
+  
+  function updateGraphs() {
+    zingchart.render({
+      id: 'emg1',
+      height: 100,
+      width: 400,
+      data: emgData[0]
+    });
   }

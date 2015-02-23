@@ -19,6 +19,7 @@ var Myo = require('myo');
 var myMyo = Myo.create();
 Myo.on('connected', function(){
     console.log('Myo connected! ID: ', this.id)
+    myMyo.streamEMG(true);
 });
 
 // view engine setup
@@ -92,6 +93,8 @@ var IMUdata = {
   }
 };
 
+var EMGdata = [];
+
 // ### Myo ###
 myMyo.on('imu', function(data){
 	IMUdata = data;
@@ -123,6 +126,12 @@ function getYaw(data){
 	var yaw_w = ((yaw + Math.PI/2.0)/Math.PI * 18);
 	return yaw_w;
 }
+
+myMyo.on('emg', function(data){
+  //console.log(data[1]);
+  EMGdata = data;
+  sendEMGData();
+});
 
 // ### SOCKET.IO ###
 io.on('connection', function(socket){
@@ -161,4 +170,9 @@ var server = http.listen(3000, function () {
 function sendMyoData()
 {
   io.sockets.emit('IMU Update', IMUdata);
+}
+
+function sendEMGData()
+{
+  io.sockets.emit('EMG Update', EMGdata);
 }
