@@ -56,10 +56,10 @@ script.
     socket.emit('Zero orientation');
   }
 
-  initEMGData();
+  //initEMGData();
   // EMG Data
   function initEMGData() {
-    alert('initEMGData!');
+    //alert('initEMGData!');
 
     for (var i=0; i < 8; i++) {
       var temp = Array.apply(null, new Array(100)).map(Number.prototype.valueOf,20);
@@ -72,15 +72,27 @@ script.
       };
     }
 
-    alert('initEMGData! Done!');
+    //alert('initEMGData! Done!');
   }
+
+
 
   socket.on('EMG Update', function(EMGmsg){
     //alert(EMGmsg);
     //shiftEMGData();
     //addEMGDataElement(EMGmsg);
 
-    updateGraphs();
+    emg1 = EMGmsg[0];
+    emg2 = EMGmsg[1];
+    emg3 = EMGmsg[2];
+    emg4 = EMGmsg[3];
+
+    emg5 = EMGmsg[4];
+    emg6 = EMGmsg[5];
+    emg7 = EMGmsg[6];
+    emg8 = EMGmsg[7];
+
+    //updateGraphs();
   });
 
   function shiftEMGData() {
@@ -94,12 +106,295 @@ script.
       emgData[i].push(EMGmsg[i]);
     }
   }
-  
-  function updateGraphs() {
-    zingchart.render({
-      id: 'emg1',
-      height: 100,
-      width: 400,
-      data: emgData[0]
-    });
+
+  function feed(callback) {
+    var tick = {};
+    tick.plot0 = parseInt(10+900*Math.random(), 10);
+    callback(JSON.stringify(tick));
   }
+
+  // EMG CHARTS
+  var chartData1={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed1()",
+      "interval":50
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData2={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed2()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData3={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed3()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData4={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed4()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData5={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed5()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData6={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed6()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData7={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed7()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  var chartData8={
+    "type": "line",
+    "refresh":{
+      "type":"feed",
+      "transport":"js",
+      "url":"feed8()",
+      "interval":100
+    },
+    "plot":{
+        "aspect":"spline"
+    },
+    "scale-y":{
+        "values":"-200:200"
+    },
+    "series":[
+    {
+        "values":[]
+    }
+    ]
+  };
+
+  // END OF EMG CHARTS
+
+  window.onload = function(){
+    zingchart.render({
+      id:'emg1',
+      height:200,
+      width:550,
+      data:chartData1
+    });
+
+    zingchart.render({
+      id:'emg2',
+      height:200,
+      width:550,
+      data:chartData2
+    });
+
+    zingchart.render({
+      id:'emg3',
+      height:200,
+      width:550,
+      data:chartData3
+    });
+
+    zingchart.render({
+      id:'emg4',
+      height:200,
+      width:550,
+      data:chartData4
+    });
+
+    zingchart.render({
+      id:'emg5',
+      height:200,
+      width:550,
+      data:chartData5
+    });
+
+    zingchart.render({
+      id:'emg6',
+      height:200,
+      width:550,
+      data:chartData6
+    });
+
+    zingchart.render({
+      id:'emg7',
+      height:200,
+      width:550,
+      data:chartData7
+    });
+
+    zingchart.render({
+      id:'emg8',
+      height:200,
+      width:550,
+      data:chartData8
+    });
+  };
+
+  window.feed1 = function(callback) {
+    
+    var tick = {};
+    tick.plot0 = emg1;
+    //tick.plot0 = parseInt(100-200*Math.random(), 10);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed2 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg2;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed3 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg3;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed4 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg4;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed5 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg5;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed6 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg6;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed7 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg7;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
+
+  window.feed8 = function(callback) {
+    var tick = {};
+    tick.plot0 = emg8;
+    //alert(tick.plot0);
+    callback(JSON.stringify(tick));
+  };
